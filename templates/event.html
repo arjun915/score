@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ event.name }}</h2>
+<p>{{ event.description }}</p>
+<h3>Scores</h3>
+<table>
+    <tr>
+        <th>Team</th>
+        <th>Score</th>
+    </tr>
+    {% for score in event.scores %}
+        <tr>
+            <td>{{ score.team_name }}</td>
+            <td>{{ score.score }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<h3>Add Score</h3>
+<form method="POST">
+    <input type="text" name="team_name" placeholder="Team Name" required>
+    <input type="number" name="score" placeholder="Score" required>
+    <button type="submit">Add</button>
+</form>
+{% endblock %}
