@@ -1,0 +1,37 @@
+<!-- base_generic.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Default Title{% endblock %}</title>
+  
+  <!-- Link to your CSS file (make sure it's in the static folder) -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+  <header>
+    <!-- Add a header if needed -->
+    <nav>
+      <!-- <a href="{% url 'event_list' %}">Events</a> -->
+      <!-- Add other navigation links here -->
+    </nav>
+  </header>
+
+  <main>
+    <!-- This is where the content of each page will be injected -->
+    {% block content %}
+    <!-- Content will be inserted here from the child templates -->
+    {% endblock %}
+  </main>
+
+  <footer>
+    <!-- Add footer content here -->
+    <!-- <p>&copy; 2024 Your Company</p> -->
+  </footer>
+</body>
+</html>
