@@ -50,3 +50,7 @@ def reset_score(request, team_id):
     team.score = 0
     team.save()
     return redirect('event_detail', pk=team.event.pk)
+
+def remote_event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, 'scoring/remote_event_detail.html', {'event': event})

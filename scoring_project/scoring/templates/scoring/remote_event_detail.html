@@ -1,0 +1,62 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Remote Event Details{% endblock %}
+
+{% block content %}
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="text-center mb-4">{{ event.name }}</h1>
+        <h4 class="text-muted text-center">Teams and Scores</h4>
+
+        <div class="row" id="team-grid">
+            {% for team in event.teams.all %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow border-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">{{ team.name }}</h5>
+                            <p class="card-text">
+                                <span class="font-weight-bold">Score: </span>
+                                <span id="score-{{ team.id }}">{{ team.score }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'event_list' %}" class="btn btn-outline-secondary mt-4">Back to Events</a>
+    </div>
+</body>
+
+<script>
+    console.log("js called")
+    console.log('WebSocket URL:', 'ws://' + window.location.host + '/ws/score/{{ event.name }}/');
+
+    // Initialize WebSocket connection
+    // const eventSocket = new WebSocket(
+    //     'ws://' + window.location.host + '/ws/score/{{ event.name }}/'
+    // );
+    const eventSocket = new WebSocket('ws://' + window.location.host + '/ws/score/Test/');
+
+    eventSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        // Update the score dynamically
+        const teamId = data.team_id;
+        const newScore = data.score;
+
+        const scoreElement = document.getElementById(`score-${teamId}`);
+        if (scoreElement) {
+            scoreElement.innerText = newScore;
+        }
+    };
+
+    eventSocket.onopen = function() {
+        console.log("WebSocket connection opened.");
+    };
+
+    eventSocket.onclose = function() {
+        console.log("WebSocket connection closed.");
+    };
+</script>
+{% endblock %}

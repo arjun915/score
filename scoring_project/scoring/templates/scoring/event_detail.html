@@ -28,6 +28,9 @@
                 </div>
             {% endfor %}
         </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'remote_event_detail' pk=event.pk %}" class="btn btn-outline-primary">View Remote</a>
+        </div>
 
         <a href="{% url 'event_list' %}" class="btn btn-link">Back to Events</a>
     </div>
