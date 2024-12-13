@@ -28,12 +28,48 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="card-footer text-center">
+        <!-- <div class="card-footer text-center">
             <a href="{% url 'remote_event_detail' pk=event.pk %}" class="btn btn-outline-primary">View Remote</a>
+        </div> -->
+        <div class="card-footer text-center">
+            <button 
+                class="btn btn-outline-primary" 
+                onclick="copyToClipboard('{{ request.build_absolute_uri }}')">
+                View Remote
+            </button>
         </div>
+        
 
         <a href="{% url 'event_list' %}" class="btn btn-link">Back to Events</a>
     </div>
 </body>
 
 </html>
+
+<script>
+    function copyToClipboard(link) {
+    const tempInput = document.createElement('input');
+    tempInput.value = link;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+
+    // Show a non-blocking toast message
+    const toast = document.createElement('div');
+    toast.innerText = 'Remote link copied to clipboard!';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.backgroundColor = '#28a745';
+    toast.style.color = '#fff';
+    toast.style.padding = '10px';
+    toast.style.borderRadius = '5px';
+    toast.style.boxShadow = '0 2px 5px rgba(0,0,0,0.3)';
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        document.body.removeChild(toast);
+    }, 3000); // Remove after 3 seconds
+}
+</script>

@@ -54,3 +54,22 @@ def reset_score(request, team_id):
 def remote_event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     return render(request, 'scoring/remote_event_detail.html', {'event': event})
+
+
+from django.http import JsonResponse
+
+def get_event_scores(request, pk):
+    # Get the event by primary key
+    event = get_object_or_404(Event, pk=pk)
+    
+    # Prepare data for teams and their scores
+    teams_data = []
+    for team in event.teams.all():
+        teams_data.append({
+            'id': team.id,
+            'name': team.name,
+            'score': team.score
+        })
+    
+    # Return the scores as JSON
+    return JsonResponse({'teams': teams_data})

@@ -43,8 +43,8 @@ INSTALLED_APPS = [
 ASGI_APPLICATION = 'scoring_project.asgi.application'
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',  # Use in-memory channel layer
     },
 }
 

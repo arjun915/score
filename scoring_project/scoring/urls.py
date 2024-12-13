@@ -11,7 +11,7 @@ urlpatterns = [
     path('decrement-score/<int:team_id>/', views.decrement_score, name='decrement_score'),
     path('team/<int:team_id>/reset/', views.reset_score, name='reset_score'),
     path('remote_event/<int:pk>/', views.remote_event_detail, name='remote_event_detail'),
-
+    path('get_event_scores/<int:pk>/', views.get_event_scores, name='get_event_scores'),
 
 ]
 
