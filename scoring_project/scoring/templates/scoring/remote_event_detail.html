@@ -1,43 +1,59 @@
 {% extends 'base_generic.html' %}
 
 {% block title %}Remote Event Details{% endblock %}
-
+{% load static %}
 {% block content %}
-  <div class="container py-5">
+<div class="container py-5">
     <h1 class="text-center mb-4">{{ event.name }}</h1>
-    <h4 class="text-muted text-center">Teams and Scores</h4>
+    <h4 class="text-muted text-center mb-4">Kabaddi Teams and Scores</h4>
 
-    <!-- Display teams and their scores -->
-    <div class="row">
+    <!-- Kabaddi Score Card Layout -->
+    <div class="row justify-content-center">
         {% for team in event.teams.all %}
-            <div class="col-md-4 mb-4">
-                <div class="card shadow border-light">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-primary">{{ team.name }}</h5>
-                        <p class="card-text">
-                            <span class="font-weight-bold">Score: </span><span id="score-{{ team.id }}">{{ team.score }}</span>
-                        </p>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg rounded-lg border-0">
+                    <div class="card-body p-4 text-center">
+                        <!-- Kabaddi icon + Dynamic Team Name -->
+                        <div class="team-header d-flex justify-content-center align-items-center mb-3">
+                            <!-- Example Kabaddi Icon (you can replace this with an actual Kabaddi icon) -->
+                            <img src="{% static 'images/kabaddi-icon.png' %}" alt="Kabaddi Icon" class="team-icon me-2" width="30">
+                            <h5 class="card-title text-2xl font-bold text-primary">{{ team.name }}</h5>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="score-box text-white rounded-full p-4 text-3xl position-relative">
+                                <!-- Dynamically display score -->
+                                <span id="score-team-{{ team.id }}" class="score">{{ team.score }}</span>
+                                <!-- Optional: Add points/goal indicator (e.g., raid, tackle) -->
+                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 
-    <a href="{% url 'event_list' %}" class="btn btn-outline-secondary mt-4">Back to Events</a>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'event_list' %}" class="btn btn-outline-secondary px-5 py-2">Back to Events</a>
+    </div>
   </div>
+
 
   <script>
     // Use JavaScript to periodically check for updated scores
-    setInterval(function() {
-        fetch('/get_event_scores/{{ event.pk }}')
-            .then(response => response.json())
-            .then(data => {
-                data.teams.forEach(team => {
-                    document.getElementById('score-' + team.id).innerText = team.score;
-                });
-            })
-            .catch(error => console.error('Error fetching updated scores:', error));
-    }, 2000); // Refresh every 5 seconds
+    // setInterval(function() {
+    //     fetch('/get_event_scores/{{ event.pk }}')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             data.teams.forEach(team => {
+    //                 document.getElementById('score-' + team.id).innerText = team.score;
+    //             });
+    //         })
+    //         .catch(error => console.error('Error fetching updated scores:', error));
+    // }, 2000); // Refresh every 5 seconds
   </script>
 
 {% endblock %}
